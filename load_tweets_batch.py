@@ -37,6 +37,7 @@ def remove_nulls(s):
     else:
         return s.replace('\x00','\\x00')
 
+
 def batch(iterable, n=1):
     '''
     Group an iterable into batches of size n.
@@ -190,7 +191,7 @@ def _insert_tweets(connection,input_tweets):
             'screen_name':remove_nulls(tweet['user']['screen_name']),
             'name':remove_nulls(tweet['user']['name']),
             'location':remove_nulls(tweet['user']['location']),
-            'url':remove_nulls(user_id_urls),
+            'url':user_id_urls,
             'description':remove_nulls(tweet['user']['description']),
             'protected':tweet['user']['protected'],
             'verified':tweet['user']['verified'],
@@ -297,7 +298,7 @@ def _insert_tweets(connection,input_tweets):
             id_urls = url['expanded_url']
             tweet_urls.append({
                 'id_tweets':tweet['id'],
-                'url':remove_nulls(id_urls),
+                'url':id_urls,
                 })
 
         ########################################
@@ -356,7 +357,7 @@ def _insert_tweets(connection,input_tweets):
             id_urls = medium['media_url']
             tweet_media.append({
                 'id_tweets':tweet['id'],
-                'url':remove_nulls(id_urls),
+                'url':id_urls,
                 'type':medium['type']
                 })
 
@@ -380,7 +381,7 @@ def _insert_tweets(connection,input_tweets):
         # NOTE:
         # in general, it is a good idea to avoid designing tables that require special SQL on the insertion;
         # it makes your python code much more complicated,
-    # and is also bad for performance;
+        # and is also bad for performance;
         # I'm doing it here just to help illustrate the problems
         sql = sqlalchemy.sql.text('''
         INSERT INTO tweets

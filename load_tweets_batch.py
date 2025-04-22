@@ -294,7 +294,7 @@ def _insert_tweets(connection,input_tweets):
             urls = tweet['entities']['urls']
 
         for url in urls:
-            id_urls = get_id_urls(url['expanded_url'])
+            id_urls = url['expanded_url']
             tweet_urls.append({
                 'id_tweets':tweet['id'],
                 'url':remove_nulls(id_urls),
@@ -380,7 +380,7 @@ def _insert_tweets(connection,input_tweets):
         # NOTE:
         # in general, it is a good idea to avoid designing tables that require special SQL on the insertion;
         # it makes your python code much more complicated,
-        # and is also bad for performance;
+    # and is also bad for performance;
         # I'm doing it here just to help illustrate the problems
         sql = sqlalchemy.sql.text('''
         INSERT INTO tweets
